@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SSK ফর্ম</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #1e1e1e;
+      color: white;
+      padding: 20px;
+    }
+
+    .center-box {
+      max-width: 400px;
+      margin: 50px auto;
+      padding: 30px;
+      background: #333;
+      border-radius: 12px;
+      box-shadow: 0 0 10px #4a90e2;
+    }
+
+    h2 {
+      text-align: center;
+      color: #4a90e2;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: none;
+      border-radius: 6px;
+      font-size: 1em;
+    }
+
+    button {
+      margin-top: 20px;
+      width: 100%;
+      padding: 12px;
+      background: #4a90e2;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      color: white;
+      font-size: 1em;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #357ABD;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    /* Loading animation container */
+    #loading {
+      text-align: center;
+      margin-top: 150px;
+    }
+
+    #loading .dot {
+      width: 15px;
+      height: 15px;
+      margin: 0 5px;
+      background-color: #4a90e2;
+      border-radius: 50%;
+      opacity: 0.6;
+      animation: bounce 1.5s infinite ease-in-out;
+      display: inline-block;
+    }
+
+    #loading .dot:nth-child(2) { animation-delay: 0.3s; }
+    #loading .dot:nth-child(3) { animation-delay: 0.6s; }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); opacity: 0.6; }
+      50% { transform: translateY(-15px); opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- লোডিং অ্যানিমেশন -->
+  <div id="loading">
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+  </div>
+
+  <!-- প্রথম ফর্ম -->
+  <form id="form1" class="center-box hidden">
+    <h2>SSK থেকে স্বাগতম</h2>
+    <label for="username">Username</label>
+    <input type="text" id="username" required>
+
+    <label for="platform">Platform</label>
+    <select id="platform" required>
+      <option value="" disabled selected>নির্বাচন করুন</option>
+      <option value="Facebook">Facebook</option>
+      <option value="TikTok">TikTok</option>
+      <option value="Instagram">Instagram</option>
+    </select>
+
+    <label for="videoUrl">ভিডিও URL</label>
+    <input type="text" id="videoUrl" required>
+
+    <button type="submit">Submit</button>
+  </form>
+
+  <!-- ধন্যবাদ মেসেজ -->
+  <div id="thankYou" class="center-box hidden">
+    <h2>SSK থেকে ধন্যবাদ!</h2>
+    <p style="text-align:center;">আপনার তথ্য গ্রহণ করা হয়েছে। এখন আরও বিস্তারিত দিন।</p>
+  </div>
+
+  <!-- দ্বিতীয় ফর্ম -->
+  <form id="form2" class="center-box hidden">
+    <h2>আপনার চাহিদা দিন</h2>
+
+    <label for="social2">Social Platform</label>
+    <select id="social2" required>
+      <option value="" disabled selected>নির্বাচন করুন</option>
+      <option value="Facebook">Facebook</option>
+      <option value="TikTok">TikTok</option>
+      <option value="Instagram">Instagram</option>
+    </select>
+
+    <label for="type">আপনি কী বাড়াতে চান?</label>
+    <select id="type" required>
+      <option value="" disabled selected>বেছে নিন</option>
+      <option value="Likes">Likes</option>
+      <option value="Hearts">Hearts</option>
+      <option value="Views">Views</option>
+      <option value="Comments">Comments</option>
+    </select>
+
+    <label for="amount">সংখ্যা (10 - 1000)</label>
+    <select id="amount" required>
+      <option value="" disabled selected>সংখ্যা নির্বাচন করুন</option>
+    </select>
+
+    <button type="submit">Apply</button>
+  </form>
+
+  <!-- পেমেন্ট অপশন -->
+  <div id="payment" class="center-box hidden">
+    <h2>Payment Options</h2>
+    <p>বিকাশ: 018xxxxxxxx</p>
+    <p>নগদ: 018xxxxxxxx</p>
+    <p>Order by: ১২/২৪ ঘণ্টায় ডেলিভারি সফল</p>
+
+    <label for="yourNumber">Your Number</label>
+    <input type="text" id="yourNumber" placeholder="আপনার নম্বর দিন" required>
+
+    <label for="trId">Tr ID</label>
+    <input type="text" id="trId" placeholder="ট্রানজেকশন আইডি দিন" required>
+
+    <button id="finalSubmit">Submit Order</button>
+  </div>
+
+  <script>
+    const loading = document.getElementById("loading");
+    const form1 = document.getElementById("form1");
+    const thankYou = document.getElementById("thankYou");
+    const form2 = document.getElementById("form2");
+    const payment = document.getElementById("payment");
+    const finalSubmitBtn = document.getElementById("finalSubmit");
+    const amountSelect = document.getElementById("amount");
+
+    // প্রথমে amount dropdown-এ সংখ্যা যোগ করা 10 থেকে 1000 পর্যন্ত 10 ধাপে
+    for(let i = 10; i <= 1000; i += 10) {
+      const option = document.createElement("option");
+      option.value = i;
+      option.textContent = i;
+      amountSelect.appendChild(option);
+    }
+
+    // সাইট লোড হলে ৩ সেকেন্ড লোডিং দেখাবে তারপর ফর্ম1 দেখাবে
+    window.addEventListener("load", () => {
+      setTimeout(() => {
+        loading.style.display = "none";
+        form1.classList.remove("hidden");
+      }, 3000);
+    });
+
+    form1.addEventListener("submit", e => {
+      e.preventDefault();
+      loading.style.display = "block";
+      form1.classList.add("hidden");
+
+      setTimeout(() => {
+        loading.style.display = "none";
+        thankYou.classList.remove("hidden");
+
+        setTimeout(() => {
+          thankYou.classList.add("hidden");
+          form2.classList.remove("hidden");
+        }, 2000);
+      }, 2000);
+    });
+
+    form2.addEventListener("submit", e => {
+      e.preventDefault();
+      loading.style.display = "block";
+
+      setTimeout(() => {
+        loading.style.display = "none";
+
+        const platform = document.getElementById("social2").value;
+        const type = document.getElementById("type").value;
+        const amount = document.getElementById("amount").value;
+
+        alert(`✅ আপনি ${platform}-এ ${type} ${amount} টি বাড়াতে চাচ্ছেন।`);
+
+        form2.classList.add("hidden");
+        payment.classList.remove("hidden");
+      }, 2000);
+    });
+
+    finalSubmitBtn.addEventListener("click", e => {
+      e.preventDefault();
+      const yourNumber = document.getElementById("yourNumber").value.trim();
+      const trId = document.getElementById("trId").value.trim();
+
+      if (!yourNumber || !trId) {
+        alert("অনুগ্রহ করে আপনার নম্বর এবং ট্রানজেকশন আইডি দিন।");
+        return;
+      }
+
+      alert(`ধন্যবাদ! আপনার অর্ডার গ্রহণ করা হয়েছে।\nনম্বর: ${yourNumber}\nট্রানজেকশন আইডি: ${trId}`);
+
+      // পেমেন্ট ফর্ম রিসেট এবং লুকিয়ে দাও
+      document.getElementById("yourNumber").value = "";
+      document.getElementById("trId").value = "";
+      payment.classList.add("hidden");
+    });
+  </script>
+</body>
+</html>
